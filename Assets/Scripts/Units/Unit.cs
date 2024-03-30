@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,11 @@ public class Unit : MonoBehaviour
     private GridPosition gridPosition;
 
     private MoveAction moveAction;
+    public event Action<int> OnStaminaChanged;
+
+    [SerializeField]
+    private int stamina = 100;
+    public Stamina staminaComponent;
 
     private void Awake()
     {
@@ -17,6 +23,7 @@ public class Unit : MonoBehaviour
     {
         gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         LevelGrid.Instance.SetUnitAtGridPosition(gridPosition, this);
+        staminaComponent = FindObjectOfType<Stamina>();
     }
 
     private void Update()
@@ -29,6 +36,14 @@ public class Unit : MonoBehaviour
             LevelGrid.Instance.UnitMoveGridPosition(this, gridPosition, newGridPosition);
             gridPosition = newGridPosition;
         }
+    }
+
+    public void ReduceStamina(int amount)
+    {
+        stamina -= amount;
+        if (stamina < 0) stamina = 0;
+        OnStaminaChanged?.Invoke(stamina);
+        // 这里可以添加一些逻辑，比如当体力耗尽时执行的操作
     }
 
     public MoveAction GetMoveAction()

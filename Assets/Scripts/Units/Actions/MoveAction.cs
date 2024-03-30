@@ -58,6 +58,14 @@ public class MoveAction : BaseAction
             positionList.Add(LevelGrid.Instance.GetWorldPosition(pathGridPosition));
         }
 
+        if (positionList.Count > 0 && unit.staminaComponent != null)
+        {
+            // 每移动一格消耗4点体力
+            int staminaReduction = 4 * (positionList.Count - 1);
+            unit.staminaComponent.OnStaminaChanged(Mathf.RoundToInt(unit.staminaComponent.percentage) - staminaReduction, 100);
+        }
+
+
         OnStartMoving?.Invoke(this, EventArgs.Empty);
 
         ActionStart(onActionComplete);

@@ -16,26 +16,25 @@ public class Stamina : MonoBehaviour
         {
             if (_percentage != value)
             {
-                
-                DOTween.To(() => HP.anchoredPosition, x => HP.anchoredPosition = x, new Vector2(-620+value*6.2f,0), 0.5f);
+                DOTween.To(() => HP.anchoredPosition, x => HP.anchoredPosition = x, new Vector2(-620 + value * 6.2f, 0), 0.5f);
                 _percentage = value;
             }
         }
     }
+
     private RectTransform HP;
-    private RectTransform HPContinar;
-    // Start is called before the first frame update
+
     void Start()
     {
         HP = transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
+    }
 
-    }
-    private void Update()
+    public void OnStaminaChanged(int currentStamina, int maxStamina)
     {
-        if (Input.GetKeyDown(KeyCode.A)) {
-            Sminus(10);
-        }
+        // 更新百分比值，假设体力值是从0到maxStamina
+        percentage = (float)currentStamina / maxStamina * 100;
     }
+
     public void Sminus(float x) {
         percentage -= x;
     }

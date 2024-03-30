@@ -6,7 +6,8 @@ public class UItest : MonoBehaviour
 {
     public Animator ani;
     public Animator opani;
-    // Start is called before the first frame update
+
+
     void Start()
     {
         
