@@ -1,0 +1,4 @@
+repository "Expedition_Planet_Pathfinder@crazyseed@cloud.cn"
+  path "/"
+    br "/main"
+    co "/main"
